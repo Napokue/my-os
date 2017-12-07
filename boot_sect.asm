@@ -2,31 +2,31 @@
 ; A simple boot sector program
 ;
 
-mov ah, 0x0e		; int 10/ah = 0eh -> scrolling teletype BIOS routine
+mov ah, 0x0e			; int 10/ah = 0eh -> scrolling teletype BIOS routine
 
-mov al, 'H'
+mov al, 'H'				; Allocate the value'H' to al
 int 0x10
-mov al, 'e'
+mov al, 'e'				; Allocate the value'e' to al
+int 0x10			
+mov al, 'l'				; Allocate the value'l' to al
 int 0x10
-mov al, 'l'
+mov al, 'l'				; Allocate the value'l' to al
 int 0x10
-mov al, 'l'
-int 0x10
-mov al, 'o'
+mov al, 'o'				; Allocate the value'o' to al
 int 0x10
 int 0x10
-move al, 'W'
+move al, 'W'			; Allocate the value'W' to al
 int 0x10
-move al, 'o'
+move al, 'o'			; Allocate the value'o' to al
 int 0x10
-move al, 'r'
+move al, 'r'			; Allocate the value'r' to al
 int 0x10
-move al, 'l'
+move al, 'l'			; Allocate the value'l' to al
 int 0x10
-move al, 'd'
+move al, 'd'			; Allocate the value'd' to al
 int 0x10
 
-jmp $					; Jump to the current address (i.e forever).
+jmp $					; Infinite jump
 
 
 times 510-($-$$) db 0	; When compiled, our program must fit into 512 bytes,
@@ -37,4 +37,3 @@ times 510-($-$$) db 0	; When compiled, our program must fit into 512 bytes,
 
 dw 0xaa55				; Last two bytes (one word) form the magic number,
 						; so BIOS knows wer are a boot sector.
-
