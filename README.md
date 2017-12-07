@@ -8,11 +8,11 @@ Learning to write a small and basic OS using the following resources:
 ## Compile
 To compile the asm files to bin, use the following command:
 ```
-$nasm boot_sect.asm -f bin -o boot_sect.bin
+$nasm [File-name].asm -f bin -o [File-name].bin
 ```
 
 ## Run
 To run the program, use the following command:
 ```
-$qemu-system-i386 boot_sect.bin
+$qemu-system-i386 [File-name].bin
 ```
