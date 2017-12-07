@@ -15,15 +15,15 @@ int 0x10
 mov al, 'o'				; Allocate the value'o' to al
 int 0x10
 int 0x10
-move al, 'W'			; Allocate the value'W' to al
+mov al, 'W'				; Allocate the value'W' to al
 int 0x10
-move al, 'o'			; Allocate the value'o' to al
+mov al, 'o'				; Allocate the value'o' to al
 int 0x10
-move al, 'r'			; Allocate the value'r' to al
+mov al, 'r'				; Allocate the value'r' to al
 int 0x10
-move al, 'l'			; Allocate the value'l' to al
+mov al, 'l'				; Allocate the value'l' to al
 int 0x10
-move al, 'd'			; Allocate the value'd' to al
+mov al, 'd'				; Allocate the value'd' to al
 int 0x10
 
 jmp $					; Infinite jump
