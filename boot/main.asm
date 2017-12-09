@@ -8,9 +8,9 @@
     call switch_to_pm
     jmp $
 
-%include "../16bit/boot_sect_print.asm"
+%include "16bit_print.asm"
 %include "gdt.asm"
-%include "print.asm"
+%include "32bit_print.asm"
 %include "switch_pm.asm"
 
 [bits 32]
