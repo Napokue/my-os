@@ -2,32 +2,27 @@
 ; A simple boot sector program
 ;
 
-mov ah, 0x0e			; int 10/ah = 0eh -> scrolling teletype BIOS routine
+mov al, 'H'
+call my_print_function
 
-mov al, 'H'				; Allocate the value'H' to al
-int 0x10
-mov al, 'e'				; Allocate the value'e' to al
-int 0x10			
-mov al, 'l'				; Allocate the value'l' to al
-int 0x10
-mov al, 'l'				; Allocate the value'l' to al
-int 0x10
-mov al, 'o'				; Allocate the value'o' to al
-int 0x10
-int 0x10
-mov al, 'W'				; Allocate the value'W' to al
-int 0x10
-mov al, 'o'				; Allocate the value'o' to al
-int 0x10
-mov al, 'r'				; Allocate the value'r' to al
-int 0x10
-mov al, 'l'				; Allocate the value'l' to al
-int 0x10
-mov al, 'd'				; Allocate the value'd' to al
-int 0x10
+mov al, 'e'
+call my_print_function
+
+mov al, 'l'
+call my_print_function
+
+mov al, 'l'
+call my_print_function
+
+mov al, 'o'
+call my_print_function
 
 jmp $					; Infinite jump
 
+my_print_function:
+	mov ah, 0x0e		; int 10/ah = 0eh -> scrolling teletype BIOS routine
+	int 0x10			; Print the character in al
+	ret					; Return from the function call
 
 times 510-($-$$) db 0	; When compiled, our program must fit into 512 bytes,
 						; with the last two bytes being the magic number,
