@@ -5,7 +5,7 @@ OBJ = ${C_SOURCES:.c=.o}
 all: os-image
 
 run: os-image
-	qemu-system-i386 -fda os-image.bin
+	qemu-system-i386 -fda os-image.bin -boot a -no-fd-bootchk
 
 os-image: boot/boot_sect.bin kernel.bin
 	cat $^ > os-image.bin
