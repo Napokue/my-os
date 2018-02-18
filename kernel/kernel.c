@@ -2,5 +2,5 @@
 #include "util.h"
 
 void main() {
-    
+ clear_screen();   
 }
