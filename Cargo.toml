@@ -5,3 +5,6 @@ authors = ["Timo de Kort (Napokue)"]
 
 [lib]
 crate-type = ["staticlib"]
+
+[dependencies]
+rlibc = "1.0.0"
