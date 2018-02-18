@@ -1,5 +1,4 @@
 use core::fmt;
-use core::fmt::Write;
 use core::ptr::Unique;
 use volatile::Volatile;
 use spin::Mutex;
