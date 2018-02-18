@@ -11,7 +11,7 @@ mod vga_buffer;
 
 #[no_mangle]
 pub extern fn rust_main() {
-    vga_buffer::print_something("Ik ben super sexy");
+    vga_buffer::print_something("Hello World!");
 
     loop{}
 }
