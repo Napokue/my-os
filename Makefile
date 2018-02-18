@@ -1,27 +1,42 @@
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c)
-HEADERS = $(wildcard kernel/*.h drivers/*.h)
-OBJ = ${C_SOURCES:.c=.o}
+arch ?= x86_64
+kernel := build/kernel-$(arch).bin
+iso := build/os-$(arch).iso
+target ?= $(arch)-my_os
+rust_os := target/$(target)/debug/libmy_os.a
 
-all: os-image
+linker_script := src/arch/$(arch)/linker.ld
+grub_cfg := src/arch/$(arch)/grub.cfg
+assembly_source_files := $(wildcard src/arch/$(arch)/*.asm)
+assembly_object_files := $(patsubst src/arch/$(arch)/%.asm, \
+	build/arch/$(arch)/%.o, $(assembly_source_files))
 
-run: os-image
-	qemu-system-i386 -drive format=raw,file=os-image.bin 
+.PHONY: all clean run iso kernel
 
-os-image: boot/boot_sect.bin kernel.bin
-	cat $^ > os-image.bin
+all: $(kernel)
 
-kernel.bin: kernel/kernel_entry.o ${OBJ}
-	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary --ignore-unresolved-symbol _GLOBAL_OFFSET_TABLE_
+clean:
+	@rm -r build
 
-%.o : %.c
-		gcc -m32 -ffreestanding -c $< -o $@
+run: $(iso)
+	@qemu-system-x86_64 -cdrom $(iso)
 
-%.o : %.asm
-	nasm $< -f elf -o $@
+iso: $(iso)
 
-%.bin : %.asm
-	nasm $< -f bin -I 'boot/' -o $@
+$(iso): $(kernel) $(grub_cfg)
+	@mkdir -p build/isofiles/boot/grub
+	@cp $(kernel) build/isofiles/boot/kernel.bin
+	@cp $(grub_cfg) build/isofiles/boot/grub
+	@grub-mkrescue -o $(iso) build/isofiles 2> /dev/null
+	@rm -r build/isofiles
 
-clean: 
-	rm -fr *.bin *.dis *.o os-image
-	rm -fr kernel/*.o boot/*.bin drivers/*.o
+$(kernel): kernel $(rust_os) $(assembly_object_files) $(linker_script)
+	@ld -n --gc-sections -T $(linker_script) -o $(kernel) \
+		$(assembly_object_files) $(rust_os)
+
+kernel:
+	@xargo build --target $(target)
+
+# compile assembly files
+build/arch/$(arch)/%.o: src/arch/$(arch)/%.asm
+	@mkdir -p $(shell dirname $@)
+	@nasm -felf64 $< -o $@
