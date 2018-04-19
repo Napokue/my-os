@@ -47,13 +47,9 @@ struct ScreenChar {
     color_code: ColorCode,
 }
 
-
-
-
 struct Buffer {
     chars: [[Volatile<ScreenChar>; BUFFER_WIDTH]; BUFFER_HEIGHT],
 }
-
 
 pub struct Writer {
     column_position: usize,
