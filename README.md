@@ -9,24 +9,27 @@ Learning to write a basic OS using the following resources:
 # Tools
 ## Nasm
 ```
-sudo apt install nasm
+$sudo apt install nasm
 ```
 ## Cargo
 ```
-sudo apt install cargo
+$sudo apt install cargo
 ```
 ## Rustup
 ```
-curl https://sh.rustup.rs -sSf | sh
+$curl https://sh.rustup.rs -sSf | sh
 ```
 ### Nightly build
 ```
-rustup override add nightly
+$rustup override add nightly
+```
+## Qemu
+```
+$sudo apt install qemu-system-x86
 ```
 
 # Building the OS
 ## MakeFile
-### Run
 ```
 $make run
 ```
